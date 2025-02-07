@@ -26,12 +26,11 @@ const Login = () => {
       });
 
       const data = await response.json();
-
       if (!response.ok) {
         throw new Error(data.message || 'Login failed');
       }
 
-      await login(data);
+      await login(data.token);
       navigate('/');
     } catch (err) {
       setError(err.message);

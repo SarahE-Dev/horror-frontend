@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
-// Create the context
 const AuthContext = createContext({
   user: null,
   loading: true,
@@ -11,25 +11,21 @@ const AuthContext = createContext({
   updateUser: () => {}
 });
 
-// Create the provider component
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Check for existing session on mount
   useEffect(() => {
     checkAuth();
   }, []);
-
-  // Check if user is authenticated
   const checkAuth = () => {
     try {
       const token = localStorage.getItem('token');
-      const storedUser = localStorage.getItem('user');
+      if(token){
+        const userData = jwtDecode(token);
+        setUser(userData);
       
-      if (token && storedUser) {
-        setUser(JSON.parse(storedUser));
       }
     } catch (error) {
       console.error('Auth check error:', error);
@@ -38,17 +34,11 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // Login function
-  const login = (userData) => {
+  const login = async(token) => {
     try {
-      // Store the token and user data
-      localStorage.setItem('token', userData.token);
-      localStorage.setItem('user', JSON.stringify(userData.user));
-      
-      // Update state
-      setUser(userData.user);
-      
-      // Navigate to home page
+      localStorage.setItem('token', token);
+      const userData = await jwtDecode(token);
+      setUser(userData);
       navigate('/');
     } catch (error) {
       console.error('Login error:', error);
@@ -61,7 +51,6 @@ const AuthProvider = ({ children }) => {
     try {
       // Clear storage
       localStorage.removeItem('token');
-      localStorage.removeItem('user');
       
       // Clear state
       setUser(null);

@@ -22,7 +22,6 @@ const Navbar = () => {
   const navigationLinks = [
       { name: 'Home', path: '/', icon: Home },
       { name: 'Movies', path: '/movies', icon: Film },
-      { name: 'TV Shows', path: '/tv-shows', icon: Tv },
       { name: 'Watchlist', path: '/watchlist', icon: BookmarkCheck, protected: true },
       { name: 'Chat', path: '/chat', icon: MessageCircle, protected: true },
   ];
@@ -44,24 +43,24 @@ const Navbar = () => {
           <div className="flex items-center space-x-2">
             <Link 
               to="/" 
-              className="flex items-center space-x-2 text-red-500 font-bold text-xl hover:text-red-400 transition-colors group"
+              className="flex items-center space-x-2 text-red-500 font-bold text-2xl hover:text-red-400 transition-colors group"
             >
               <Ghost className="w-6 h-6 group-hover:animate-pulse" />
-              <span className="font-horror">HORROR APP</span>
+              <span className="">HORROR APP</span>
             </Link>
           </div>
-
+          
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center justify-around grow md:space-x-6">
+          <div className="hidden md:flex md:items-center justify-center grow md:space-x-6">
             {navigationLinks.map((link) => (
               (!link.protected || (link.protected && user)) && (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-all 
+                  className={`flex items-center px-2 rounded-md text-md font-medium transition-all 
                     ${isActivePath(link.path)
-                      ? 'text-red-500 bg-red-900/20 scale-105'
-                      : 'text-gray-300 hover:text-red-500 hover:bg-red-900/10 hover:scale-105'
+                      ? 'text-red-500 bg-red-900/20'
+                      : 'text-gray-300 hover:text-red-500 hover:bg-red-900/10'
                     }`}
                 >
                   <link.icon className="w-4 h-4" />

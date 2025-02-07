@@ -1,6 +1,6 @@
 const MovieCard = ({ movie }) => {
     return (
-      <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:transform hover:scale-105 transition-transform">
+      <div className="bg-gray-800 w-66 m-7 rounded-lg overflow-hidden shadow-lg hover:transform hover:scale-105 transition-transform">
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
